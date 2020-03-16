@@ -6,7 +6,7 @@ function getTwilioSignature(auth_token, url, params) {
 }
 
 async function identifyByAttributes(identifying_attributes, context) {
-  const identificationUrl = new URL("https://" + context.DOMAIN_NAME + "/outbound-dialing/identify-callee");
+  const identificationUrl = new URL("https://" + context.DOMAIN_NAME + "/outbound-dialing/identifyCallee");
 
   identificationUrl.searchParams.append("identifying_attributes", JSON.stringify(identifying_attributes));
 
