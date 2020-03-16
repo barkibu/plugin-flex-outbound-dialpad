@@ -1,4 +1,4 @@
-# plugin-flex-outbound-dialpad
+# plugin-outbound-call
 
 This plugin is intended to demonstrate how to make outbound calls from [Twilio Flex](https://www.twilio.com/flex) that use the native call orchestration so the inbound call features such as supervisor monitoring as well as cold and warm transfer, also work for outbound calls.  This plugin also provides the ability to perform external conferencing which leverages the work on [this project](https://github.com/trogers-twilio/plugin-external-conference-warm-transfer)
 
@@ -57,13 +57,13 @@ and then
 
 5. copy ./dialpad-functions/.env.sample to ./dialpad-functions/.env and populate the appropriate SIDs.  The workflow sid should be the workflow dependency described above.
 
-6.  cd into ./dialpad-functions/ then run `npm install` and then `twilio serverless:deploy` (optionally you can run locally with `twilio serverless:start --ngrok=""`
+6.  cd into ./dialpad-functions/ then run `npm install`, copy `./dialpad-functions/.env.sample` into `./dialpad-functions/.env` and fill in all the variables, then `twilio serverless:deploy` (optionally you can run locally with `twilio serverless:start --ngrok=""`
 
-7.  Take note of the domain of where they deployed and update FUNCTIONS_HOSTNAME in ./src/OutboundDialingWithConferencePlugin.js
+7.  Take note of the domain of where they deployed and update FUNCTIONS_HOSTNAME in `.env` (copy `.env.sample` if not existing)
 
-7.  Update the DEFAULT_FROM_NUMBER in ./src/OutboundDialingWithConferencePlugin.js to a twilio number or a verified number associated with your account.
+7.  Update the rest of the variables in `.env`like DEFAULT_FROM_NUMBER to a twilio number or a verified number associated with your account.
 
-8. cd back to the root folder and run `npm start` to run locally or `npm run-script build` and deploy the generated ./build/plugin-outbound-dialing-with-conference.js to [twilio assests](https://www.twilio.com/console/assets/public) to include plugin with hosted Flex
+8. cd back to the root folder and run `npm start` to run locally or `npm run deploy` to deploy to Twilio Assets
 
 ## Important Notes
 - The plugin assumes an activity of "Outbound Calls" or "Offline" is configured for making the worker automatically unavailable, if these are not worker activity states that are available, you can either add them or update the code to change to a different state.  The same is true for ensuring an available activity of "Available" or "Idle" is in the system.
@@ -84,6 +84,10 @@ and then
 4. Update plugin builder to use serverless:cli for plugin asset deployment and align functions hostname automatically.
 
 ## Changelog
+
+v1.3.1 - Added callee identification function - Added Identification call with Twiml Status update to bind identification attributes to the task - Extracted env variable from file to react env file.
+
+---- Forked from 
 
 v1.3 - Moved dialpad to main header to avoid the responsive rendering of the side nav unmounting when resizing the canvas.
 
