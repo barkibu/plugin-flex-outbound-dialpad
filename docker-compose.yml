@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+    web:
+        build:
+            context: .
+            dockerfile: .devcontainer/Dockerfile
+        container_name: plugin-outbound-call-f
+        ports:
+            - 8080:8080
+        volumes:
+            - .:/app
+            - node_modules:/app/node_modules
+            - ~/.gitconfig:/etc/gitconfig
+        working_dir: /app
+        environment:
+            - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+            - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+
+volumes:
+    node_modules:

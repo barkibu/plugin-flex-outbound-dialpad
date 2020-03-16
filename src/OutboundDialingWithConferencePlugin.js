@@ -12,10 +12,10 @@ import { registerActionExtensions } from "./eventListeners/actionsFramework"
 
 import "./notifications/CustomNotifications";
 
-const PLUGIN_NAME = "OutboundDialingWithConferencePlugin";
+const PLUGIN_NAME = "PluginOutboundCall";
 
-export const FUNCTIONS_HOSTNAME = '';
-export const DEFAULT_FROM_NUMBER = ""; // twilio account or verified number
+export const FUNCTIONS_HOSTNAME = process.env["REACT_APP_FUNCTIONS_HOSTNAME"];
+export const DEFAULT_FROM_NUMBER = process.env["REACT_APP_DEFAULT_FROM_NUMBER"]; // twilio account or verified number
 export const SYNC_CLIENT = new SyncClient(Manager.getInstance().user.token);
 
 function tokenUpdateHandler() {
