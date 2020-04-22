@@ -1,4 +1,4 @@
-import { Actions } from "@twilio/flex-ui";
+import { Actions, Notifications } from "@twilio/flex-ui";
 
 var IsOutbound = false;
 
@@ -16,6 +16,28 @@ export function unblockForOutBoundCall() {
   IsOutbound = false;
 }
 
+function setAgentUnavailable() {
+  Actions.invokeAction("SetActivity", {
+    activityName: "Outbound Calls"
+  })
+    .then(() => {
+      console.log("OUTBOUND DIALPAD: Agent is now on Outbound Calls");
+    })
+    .catch(error => {
+      Actions.invokeAction("SetActivity", {
+        activityName: "Offline"
+      })
+        .then(() => {
+          console.log("OUTBOUND DIALPAD: Agent is now Offline");
+        })
+        .catch(() => {
+          Notifications.showNotification("ActivityStateUnavailable", {
+            state1: "Outbound Calls",
+            state2: "Offline"
+          });
+        });
+    });
+}
 
 
 function handleReservationTask(reservation) {
@@ -29,6 +51,8 @@ function handleReservationTask(reservation) {
 
       Actions.invokeAction("AcceptTask", {
         sid: reservation.sid
+      }).then(() => {
+        setTimeout(() => setAgentUnavailable(), 3000);
       });
 
       Actions.invokeAction("NavigateToView", {
